@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Paths</title>
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}" />
+  </head>
+  <body>
+    <div class="background-image">
+      <img src="{% static 'main/images/img2.jpg' %}" alt="no image" />
+    </div>
+
+    <div class="hero-section">
+      <div class="hero-title">
+        " Trace Your Path, <br /> <small><small><small>Share Your Journey "</small></small></small>
+      </div>
+
+      <button class="start-btn">Start</button>
+    </div>
+    {% comment %} <div class="container">
+      <button id="startButton">Start</button>
+      <button id="stopButton" disabled>Stop</button>
+      <div id="output"></div>
+    </div> {% endcomment %}
+
+    {% comment %} <div class="map">
+      <!-- Create a div element for the map -->
+
+      <button id="updateMap" style="font-size: 2rem; display: none">Show</button>
+
+      <div id="map" style="width: 100vw; height: 600px; display: none"></div>
+
+      <!-- Include Leaflet JavaScript and CSS files -->
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+      <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    </div> {% endcomment %}
+
+    <script src="{% static 'main/js/script.js' %}"></script>
+  </body>
+</html>
