@@ -4,6 +4,8 @@ const tracingIcon = document.querySelector("#tracingIcon");
 const heroTitle = document.querySelector(".hero-title");
 const savedRoutesBtn = document.querySelector("#showSavedRoutes");
 const routesList = document.querySelector("#routesList");
+const turnOffMapBtn = document.querySelector("#turnOffMap");
+const dotMarkerImg = document.querySelector("#dotMarkerImg");
 
 let watchID;
 let coordinatesArray = [];
@@ -81,6 +83,10 @@ savedRoutesBtn.addEventListener("click", () => {
       let displayRoute = routes.find((route) => route.name === routeName);
 
       showInMap(displayRoute.coordinates);
+
+      routesList.style.display = "none";
+
+      turnOffMapBtn.style.display = "block";
     });
   });
 
@@ -99,7 +105,7 @@ function showInMap(coordinates) {
   // Initialize the map using the first set of coordinates as the center
   var map = L.map("map").setView(
     [coordinates[0].latitude, coordinates[0].longitude],
-    20
+    13
   );
 
   // Add the tile layer (OpenStreetMap)
@@ -109,16 +115,33 @@ function showInMap(coordinates) {
     subdomains: ["a", "b", "c"],
   }).addTo(map);
 
+  // Define a custom icon
+  var customIcon = L.icon({
+    iconUrl: dotMarkerImg.src, // URL to your custom icon image
+    iconSize: [6, 6], // Size of the icon
+    iconAnchor: [15, 5], // Center of the icon (half of iconSize)
+    popupAnchor: [0, -10], // Position of the popup relative to the iconAnchor
+  });
+
   // Adjust the map view to fit all markers
   var bounds = new L.LatLngBounds();
 
   coordinates.forEach(function (coordinate) {
-    var marker = L.marker([coordinate.latitude, coordinate.longitude]).addTo(
-      map
-    );
+    var marker = L.marker([coordinate.latitude, coordinate.longitude], {
+      icon: customIcon,
+    }).addTo(map);
     bounds.extend(marker.getLatLng());
   });
 
   // Fit the map view to the bounds of the markers, ensuring they all fit within the view
   map.fitBounds(bounds, { padding: [20, 20] });
 }
+
+turnOffMapBtn.addEventListener("click", () => {
+  const mapEl = document.getElementById("map");
+  mapEl.style.display = "none";
+
+  turnOffMapBtn.style.display = "none";
+
+  routesList.style.display = "block";
+});
