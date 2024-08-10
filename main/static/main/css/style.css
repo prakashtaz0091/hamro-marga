@@ -49,7 +49,7 @@ body {
       font-weight: 600;
       letter-spacing: 2px;
       text-transform: uppercase;
-      line-height: 1.2;
+      line-height: 0.9;
       font-family: "Poppins", sans-serif;
 
       @media screen and (max-width: 768px) {
@@ -70,7 +70,7 @@ body {
     }
 
     .start-btn {
-      margin-top: 20px;
+      margin-top: 25px;
       padding: 10px 20px;
       font-size: 16px;
       background-color: #4caf50;
@@ -105,5 +105,68 @@ body {
         font-size: 8px;
       }
     }
+
+    .tracing-icon {
+      display: none;
+      animation: pop 0.6s ease-in-out infinite alternate; /* Animation */
+      img {
+        height: 100px;
+        width: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      @media screen and (max-width: 768px) {
+        img {
+          height: 80px;
+          width: 80px;
+        }
+      }
+
+      @media screen and (max-width: 480px) {
+        img {
+          height: 60px;
+          width: 60px;
+        }
+      }
+
+      @media screen and (max-width: 320px) {
+        img {
+          height: 50px;
+          width: 50px;
+        }
+      }
+
+      @media screen and (max-width: 240px) {
+        img {
+          height: 40px;
+          width: 40px;
+        }
+      }
+    }
+
+    .stop-btn {
+      display: none;
+      background-color: red;
+    }
+
+    #routesList {
+      display: none;
+      background-color: azure;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      max-height: 300px;
+      overflow: auto;
+    }
+  }
+}
+@keyframes pop {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.1);
   }
 }
