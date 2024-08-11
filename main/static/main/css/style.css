@@ -1,6 +1,7 @@
 body {
   /* background-color: azure; */
   /* background: url(); */
+  overflow-x: hidden;
 
   .background-image {
     height: 100vh;
@@ -159,6 +160,36 @@ body {
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
       max-height: 300px;
       overflow: auto;
+      margin-top: 20px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      width: 90%;
+      max-width: 500px;
+    }
+  }
+
+  .map {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px,
+      rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
+
+    .hide-btn {
+      display: none;
+      position: absolute;
+      top: -35px;
+      right: 5px;
+      z-index: 10;
+      padding: 10px;
+      cursor: pointer;
+      background-color: crimson;
+      color: white;
+      border-top-left-radius: 6px;
+      border-top-right-radius: 6px;
     }
   }
 }

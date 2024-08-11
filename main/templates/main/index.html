@@ -9,7 +9,8 @@
   </head>
   <body>
     <div class="background-image">
-      <img src="{% static 'main/images/img2.jpg' %}" alt="no image" />
+      {% comment %} <img src="{% static 'main/images/img2.jpg' %}" alt="no image" /> {% endcomment %}
+      <img src="{% static 'main/images/img1.jpg' %}" alt="no image" />
     </div>
 
     <div class="hero-section">
@@ -23,9 +24,8 @@
         <img src="{% static 'main/images/pin-point.gif' %}" alt="tracing..." />
       </div>
       <button id="stopButton" class="start-btn stop-btn">Stop</button>
-      <button id="showSavedRoutes">Saved Routes</button>
-      <div id="routesList"></div>
-      <button id="turnOffMap" style="display: none;">Hide Map</button>
+      <button id="showSavedRoutes" class="start-btn">Saved Routes</button>
+      <div id="routesList" class="routesList"></div>
 
       <img src="{% static 'main/images/blue-circle.png' %}" alt="dot" style="display: none;" id="dotMarkerImg" />
       <img src="{% static 'main/images/start-pin.png' %}" alt="start-dot" style="display: none;" id="startMarkerImg" />
@@ -34,8 +34,9 @@
 
     <div class="map">
       <!-- Create a div element for the map -->
+      <button id="turnOffMap" class="hide-btn">Hide Map</button>
 
-      <div id="map" style="width: 100vw; height: 600px; display: none"></div>
+      <div id="map" style="width: 98vw; height: 90vh; display: none"></div>
 
       <!-- Include Leaflet JavaScript and CSS files -->
       <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
