@@ -6,9 +6,15 @@ const savedRoutesBtn = document.querySelector("#showSavedRoutes");
 const routesList = document.querySelector("#routesList");
 const turnOffMapBtn = document.querySelector("#turnOffMap");
 const dotMarkerImg = document.querySelector("#dotMarkerImg");
+const startMarkerImg = document.querySelector("#startMarkerImg");
+const destinationMarkerImg = document.querySelector("#destinationMarkerImg");
 
 let watchID;
 let coordinatesArray = [];
+
+// ==============================================================================================================
+// start button to trace location
+// ==============================================================================================================
 
 startBtn.addEventListener("click", () => {
   startBtn.style.display = "none";
@@ -18,6 +24,14 @@ startBtn.addEventListener("click", () => {
 
   askLocationAccess();
 });
+
+// ==============================================================================================================
+// start button end
+// ==============================================================================================================
+
+// ==============================================================================================================
+// stop button to stop tracing location
+// ==============================================================================================================
 
 stopBtn.addEventListener("click", () => {
   if (watchID) {
@@ -33,6 +47,14 @@ stopBtn.addEventListener("click", () => {
     stopBtn.style.display = "none";
   }
 });
+
+// ==============================================================================================================
+// stop button end
+// ==============================================================================================================
+
+// ==============================================================================================================
+// Ask for location permission and watch location
+// ==============================================================================================================
 
 function askLocationAccess() {
   if (navigator.geolocation) {
@@ -53,6 +75,13 @@ function askLocationAccess() {
   }
 }
 
+// ==============================================================================================================
+// Ask for location permission and watch location
+// ==============================================================================================================
+
+// ==============================================================================================================
+// Save coordinates to local storage
+// ==============================================================================================================
 function saveCoordinates() {
   const routeName = prompt("Name this route: ");
 
@@ -60,6 +89,13 @@ function saveCoordinates() {
   previousRoutes.push({ name: routeName, coordinates: coordinatesArray });
   localStorage.setItem("routes", JSON.stringify(previousRoutes));
 }
+// ==============================================================================================================
+// Save coordinates to local storage
+// ==============================================================================================================
+
+// ==============================================================================================================
+// get saved coordinates from local storage
+// ==============================================================================================================
 
 function getSavedRoutes() {
   const savedRoutes = localStorage.getItem("routes");
@@ -68,9 +104,19 @@ function getSavedRoutes() {
   }
   return [];
 }
+// ==============================================================================================================
+// get saved coordinates from local storage
+// ==============================================================================================================
+
+// ==============================================================================================================
+// save coordinates button
+//==============================================================================================================
 
 savedRoutesBtn.addEventListener("click", () => {
   const routes = getSavedRoutes();
+
+  routesList.innerHTML = "";
+
   routes.forEach((route) => {
     const routeItem = document.createElement("button");
     routeItem.id = route.name;
@@ -93,6 +139,14 @@ savedRoutesBtn.addEventListener("click", () => {
   routesList.style.display = "block";
 });
 
+// ==============================================================================================================
+// save coordinates button
+//==============================================================================================================
+
+// ==============================================================================================================
+// show in map
+//==============================================================================================================
+let map = L.map("map");
 function showInMap(coordinates) {
   const mapEl = document.getElementById("map");
   mapEl.style.display = "block";
@@ -103,10 +157,7 @@ function showInMap(coordinates) {
   }
 
   // Initialize the map using the first set of coordinates as the center
-  var map = L.map("map").setView(
-    [coordinates[0].latitude, coordinates[0].longitude],
-    13
-  );
+  map.setView([coordinates[0].latitude, coordinates[0].longitude], 13);
 
   // Add the tile layer (OpenStreetMap)
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -123,20 +174,59 @@ function showInMap(coordinates) {
     popupAnchor: [0, -10], // Position of the popup relative to the iconAnchor
   });
 
+  let customStartIcon = L.icon({
+    iconUrl: startMarkerImg.src,
+    iconSize: [35, 35],
+    iconAnchor: [29, 30],
+    popupAnchor: [-10, -20],
+  });
+
+  let customDestinationIcon = L.icon({
+    iconUrl: destinationMarkerImg.src,
+    iconSize: [35, 35],
+    iconAnchor: [29, 30],
+    popupAnchor: [-10, -20],
+  });
+
   // Adjust the map view to fit all markers
   var bounds = new L.LatLngBounds();
 
-  coordinates.forEach(function (coordinate) {
-    var marker = L.marker([coordinate.latitude, coordinate.longitude], {
-      icon: customIcon,
-    }).addTo(map);
-    bounds.extend(marker.getLatLng());
+  coordinates.forEach(function (coordinate, index) {
+    if (index == 0) {
+      var marker = L.marker([coordinate.latitude, coordinate.longitude], {
+        icon: customStartIcon,
+      })
+        .addTo(map)
+        .bindPopup("Start")
+        .openPopup();
+      bounds.extend(marker.getLatLng());
+    } else if (index == coordinates.length - 1) {
+      var marker = L.marker([coordinate.latitude, coordinate.longitude], {
+        icon: customDestinationIcon,
+      })
+        .addTo(map)
+        .bindPopup("Destination")
+        .openPopup();
+      bounds.extend(marker.getLatLng());
+    } else {
+      var marker = L.marker([coordinate.latitude, coordinate.longitude], {
+        icon: customIcon,
+      }).addTo(map);
+      bounds.extend(marker.getLatLng());
+    }
   });
 
   // Fit the map view to the bounds of the markers, ensuring they all fit within the view
   map.fitBounds(bounds, { padding: [20, 20] });
 }
 
+// ==============================================================================================================
+// show in map
+//==============================================================================================================
+
+// ==============================================================================================================
+// hide map
+//==============================================================================================================
 turnOffMapBtn.addEventListener("click", () => {
   const mapEl = document.getElementById("map");
   mapEl.style.display = "none";
@@ -145,3 +235,7 @@ turnOffMapBtn.addEventListener("click", () => {
 
   routesList.style.display = "block";
 });
+
+// ==============================================================================================================
+// hide map
+//==============================================================================================================
