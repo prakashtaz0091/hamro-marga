@@ -1,3 +1,5 @@
+// import { testCoordinates as coordinates } from "./data.js";
+
 const startBtn = document.querySelector("#startButton");
 const stopBtn = document.querySelector("#stopButton");
 const tracingIcon = document.querySelector("#tracingIcon");
@@ -70,7 +72,6 @@ function askLocationAccess() {
         const longitude = position.coords.longitude;
 
         coordinatesArray.push({ latitude, longitude });
-        console.log(coordinatesArray);
       },
       function (error) {
         alert("Error occurred while retrieving location: " + error.message);
@@ -138,13 +139,7 @@ function showRoutes(routes) {
 
       let displayRoute = routes.find((route) => route.name === routeName);
 
-      // showInMap(displayRoute.coordinates);
-      let coords = [];
-
-      displayRoute.coordinates.forEach((coord) => {
-        coords.push([coord.latitude, coord.longitude]);
-      });
-      alert(coords);
+      showInMap(displayRoute.coordinates);
 
       routesList.style.display = "none";
 
@@ -165,27 +160,8 @@ function showInMap(coordinates) {
   const mapEl = document.getElementById("map");
   mapEl.style.display = "block";
 
-  // coordinates = [
-  //   { latitude: 26.455547, longitude: 87.290081 },
-  //   { latitude: 26.455638, longitude: 87.290091 },
-  //   { latitude: 26.45572, longitude: 87.290102 },
-  //   { latitude: 26.455792, longitude: 87.290113 },
-  //   { latitude: 26.455869, longitude: 87.290118 },
-  //   { latitude: 26.455955, longitude: 87.29014 },
-  //   { latitude: 26.45603, longitude: 87.290079 },
-  //   { latitude: 26.456044, longitude: 87.289949 },
-  //   { latitude: 26.456052, longitude: 87.28975 },
-  //   { latitude: 26.456047, longitude: 87.289536 },
-  //   { latitude: 26.456049, longitude: 87.28938 },
-  //   { latitude: 26.456041, longitude: 87.289244 },
-  //   { latitude: 26.456033, longitude: 87.289071 },
-  //   { latitude: 26.456033, longitude: 87.288966 },
-  //   { latitude: 26.456076, longitude: 87.288888 },
-  //   { latitude: 26.456134, longitude: 87.288825 },
-  //   { latitude: 26.456216, longitude: 87.288779 },
-  //   { latitude: 26.456272, longitude: 87.288698 },
-  //   { latitude: 26.456291, longitude: 87.288642 },
-  // ];
+  // coordinates = coordinates;
+
   if (coordinates.length === 0) {
     alert("No coordinates available to display on the map.");
     return;
