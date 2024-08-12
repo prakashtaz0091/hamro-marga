@@ -48,6 +48,9 @@ stopBtn.addEventListener("click", () => {
     tracingIcon.style.display = "none";
     heroTitle.style.display = "block";
     stopBtn.style.display = "none";
+
+    savedRoutesBtn.style.display = "block";
+    savedRoutesBtn.click();
   }
 });
 
@@ -119,7 +122,11 @@ savedRoutesBtn.addEventListener("click", () => {
   const routes = getSavedRoutes();
 
   routesList.innerHTML = "";
+  showRoutes(routes);
+  routesList.style.display = "flex";
+});
 
+function showRoutes(routes) {
   routes.forEach((route) => {
     const routeItem = document.createElement("button");
     routeItem.id = route.name;
@@ -131,16 +138,20 @@ savedRoutesBtn.addEventListener("click", () => {
 
       let displayRoute = routes.find((route) => route.name === routeName);
 
-      showInMap(displayRoute.coordinates);
+      // showInMap(displayRoute.coordinates);
+      let coords = [];
+
+      displayRoute.coordinates.forEach((coord) => {
+        coords.push([coord.latitude, coord.longitude]);
+      });
+      alert(coords);
 
       routesList.style.display = "none";
 
       turnOffMapBtn.style.display = "block";
     });
   });
-
-  routesList.style.display = "flex";
-});
+}
 
 // ==============================================================================================================
 // save coordinates button
@@ -256,7 +267,7 @@ turnOffMapBtn.addEventListener("click", () => {
 
   turnOffMapBtn.style.display = "none";
 
-  routesList.style.display = "flex";
+  savedRoutesBtn.click();
 });
 
 // ==============================================================================================================
